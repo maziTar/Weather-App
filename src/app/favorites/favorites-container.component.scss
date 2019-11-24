@@ -1,0 +1,17 @@
+.fav-container {
+  padding: 1rem;
+  background: url("../../assets/imgs/backgroud.jpg");
+  background-size: 100% 100%;
+
+  .fav-container-card {
+    max-width: 50rem;
+
+    .inner-fav-cards {
+      max-width: 10rem;
+      min-width: 10rem;
+      margin: 1rem;
+      cursor: pointer;
+    }
+  }
+}
+

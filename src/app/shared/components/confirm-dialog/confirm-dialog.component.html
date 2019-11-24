@@ -1,0 +1,16 @@
+<h1 *ngIf="data.titleKey" mat-dialog-title>{{data.titleKey}}</h1>
+<div mat-dialog-content>
+  <p *ngIf="!!(data.dialogText)">{{data.dialogText}}</p>
+  <ng-content></ng-content>
+</div>
+<div mat-dialog-actions>
+  <ng-container *ngIf="data.extraButtonArray">
+    <ng-container *ngFor="let button of data.extraButtonArray">
+      <button (click)="emitAction(button.buttonAction)" [color]="button.buttonColor"
+              mat-button>{{button.buttonText}}</button>
+    </ng-container>
+  </ng-container>
+  <button (click)="onNoClick()" *ngIf="!data.noCancel" mat-button>אישור</button>
+  <button [mat-dialog-close]="true" mat-button>ביטול</button>
+
+</div>

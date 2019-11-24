@@ -1,0 +1,57 @@
+<div class="weather-container" fxLayout="column" fxLayoutAlign="center center">
+  <h1>Forecast for the next 5 days</h1>
+  <form>
+    <mat-form-field>
+      <input [formControl]="weatherSearchControl" [matAutocomplete]="auto" aria-label="Number" matInput
+             placeholder="Find a city's weather"
+             type="text">
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onAutocompleteSelection($event)"
+                        [displayWith]="displayAutoCompleteFn">
+        <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">
+          {{option.localizedName}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+  <mat-card *ngIf="currentWeatherData$ | async as currentWeatherData" fxLayout="column"
+            fxLayoutGap="2rem">
+    <div *ngIf="selectedAutoCompleteOption$ | async as autocompleteSelected" class="main-header"
+         fxLayout="row wrap" fxLayoutAlign="space-between start">
+      <div fxLayout="row wrap" fxLayout.lt-sm="row" fxLayoutAlign="start">
+        <img [src]="iconsGeneratorFunc(currentWeatherData.weatherIcon)" alt="weather icon" class="img-responsive"
+             height="45"
+             typeof="foaf:Image">
+        <mat-card-title-group>
+          <mat-card-title>{{autocompleteSelected.localizedName}}</mat-card-title>
+          <mat-card-subtitle>
+            {{currentWeatherData.temperature.Value}} C°
+          </mat-card-subtitle>
+        </mat-card-title-group>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="0.5rem">
+        <mat-icon>favorite</mat-icon>
+        <button (click)="handleFavoriteEvent(currentWeatherData)" mat-raised-button>
+          {{ (isCurrentCityExistInFavoriteList$ | async) ? 'Remove From Favorites' : 'Add To Favorites' }}
+        </button>
+      </div>
+    </div>
+    <mat-card-title fxLayoutAlign="center center">
+      {{currentWeatherData.weatherText}}
+    </mat-card-title>
+    <mat-card-content fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="2rem">
+      <mat-card *ngFor="let day of selectedLocationFiveDailyDetails$ | async" fxLayout="column"
+                fxLayoutAlign="center center" fxLayoutGap="0.5rem">
+        <img [src]="iconsGeneratorFunc(day.DayIcon)" alt="weather icon" class="img-responsive" mat-card-avatar
+             typeof="foaf:Image">
+        <mat-card-header fxLayoutAlign="center center">
+          <mat-card-title>{{day.Date | date : 'EEEE' }}</mat-card-title>
+          <mat-card-subtitle>{{day.Temperature.Maximum.Value}} C° - {{day.Temperature.Minimum.Value }} C°
+          </mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </mat-card-content>
+
+  </mat-card>
+</div>
+
