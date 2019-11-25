@@ -28,7 +28,7 @@ export class ToasterInterceptorService implements HttpInterceptor {
 
   private showSnackbar(massage: string): void {
     this.snackBar.open(massage, '', {
-      duration: 60000,
+      duration: 3000,
       verticalPosition: 'top',
       panelClass: 'error'
     });
