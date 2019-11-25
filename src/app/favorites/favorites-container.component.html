@@ -1,6 +1,6 @@
 <div class="fav-container" fxLayout="column" fxLayoutAlign="center center">
   <h1>Your Favorites List</h1>
-  <mat-card class="fav-container-card" fxLayout="row wrap" fxLayoutGap="1rem">
+  <mat-card class="fav-container-card" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="1rem">
     <mat-card (click)="favoriteClicked(favorite)"
               *ngFor="let favorite of favoritesArray$ | async"
               class="inner-fav-cards"

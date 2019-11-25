@@ -19,13 +19,13 @@
     <div *ngIf="selectedAutoCompleteOption$ | async as autocompleteSelected" class="main-header"
          fxLayout="row wrap" fxLayoutAlign="space-between start">
       <div fxLayout="row wrap" fxLayout.lt-sm="row" fxLayoutAlign="start">
-        <img [src]="iconsGeneratorFunc(currentWeatherData.weatherIcon)" alt="weather icon" class="img-responsive"
+        <img [src]="iconsGeneratorFunc(currentWeatherData?.weatherIcon)" alt="weather icon" class="img-responsive"
              height="45"
              typeof="foaf:Image">
         <mat-card-title-group>
-          <mat-card-title>{{autocompleteSelected.localizedName}}</mat-card-title>
+          <mat-card-title>{{autocompleteSelected?.localizedName}}</mat-card-title>
           <mat-card-subtitle>
-            {{currentWeatherData.temperature.Value}} C°
+            {{currentWeatherData?.temperature.Value}} C°
           </mat-card-subtitle>
         </mat-card-title-group>
       </div>
@@ -33,15 +33,15 @@
       <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="0.5rem">
         <mat-icon>favorite</mat-icon>
         <button (click)="handleFavoriteEvent(currentWeatherData)" mat-raised-button>
-          {{ (isCurrentCityExistInFavoriteList$ | async) ? 'Remove From Favorites' : 'Add To Favorites' }}
+          {{ !!(isCurrentCityExistInFavoriteList$ | async) ? 'Remove From Favorites' : 'Add To Favorites' }}
         </button>
       </div>
     </div>
     <mat-card-title fxLayoutAlign="center center">
-      {{currentWeatherData.weatherText}}
+      {{currentWeatherData?.weatherText}}
     </mat-card-title>
 
-    <mat-card-content *ngIf="(selectedLocationFiveDailyDetails$ | async).length" fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="2rem">
+    <mat-card-content *ngIf="!!(selectedLocationFiveDailyDetails$ | async)" fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="2rem">
       <mat-card *ngFor="let day of selectedLocationFiveDailyDetails$ | async" fxLayout="column" class="inner-forecast-cards"
                 fxLayoutAlign="center center" fxLayoutGap="0.5rem">
         <img [src]="iconsGeneratorFunc(day.DayIcon)" alt="weather icon" class="img-responsive" mat-card-avatar
