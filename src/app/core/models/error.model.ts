@@ -2,12 +2,12 @@ import {EResultCodes} from './api.models';
 
 const DEFAULT_APP_ERROR_TYPE = 9999;
 const AppErrorsTranslationMapping = {
-  9999: 'ERRORS.ERROR_DEFUALT',
-  401: 'ERRORS.ERROR_NOT_AUTHORIZED', // must be listed in i18n json file_formData
-  500: 'ERRORS.ERROR_GENERAL', // must be listed in i18n json file_formData
+  9999: 'Unknown error',
+  401: 'Unauthorized', // must be listed in i18n json file_formData
+  500: 'General Error', // must be listed in i18n json file_formData
 
-  0: 'ERRORS.ERROR_DEFUALT',
-  801: 'ERRORS.NO_MESSAGES_FOUND',
+  0: 'an error occurred',
+  801: 'Unknown error',
 };
 
 export interface IAppErrorPayload {
@@ -28,8 +28,8 @@ export class AppError implements IAppError {
   data: string;
 
   constructor({status = DEFAULT_APP_ERROR_TYPE, error}: IAppErrorPayload) {
-    this.status = status;
-    this.value = error;
+    this.status = status || 9999;
+    this.value = error || '';
     if (!EResultCodes[status]) {
       console.error('New Type of Error found:', status);
     }

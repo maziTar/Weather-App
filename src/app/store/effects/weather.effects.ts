@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
+import {HttpClient} from '@angular/common/http';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
@@ -22,61 +23,50 @@ export class WeatherEffects {
   @Effect()
   getWeatherAutocomplete$: Observable<Action> = this.actions$.pipe(
     ofType(weatherAction.getWeatherAutocomplete),
-    switchMap((action) => {
-      return this.weatherApiService.getAutocompleteResults(action.data).pipe(
-        catchError(
-          (err) => of(weatherAction.getWeatherAutocompleteFailure({error: err}))),
-      );
-    }),
+    switchMap((action) => this.weatherApiService.getAutocompleteResults(action.data)),
     map((data: IACCUWeatherAutocompleteResponse[]) => {
       return weatherAction.getWeatherAutocompleteSuccess({
-        data:
-          (new ACCUWeatherAutocompleteResultsViewModel(data).autocompleteResults)
+        data: new ACCUWeatherAutocompleteResultsViewModel(data).autocompleteResults
       });
-    })
+    }),
+    catchError(
+      (err) => of(weatherAction.getWeatherAutocompleteFailure({error: err}))),
   );
+
   @Effect()
   getWeatherAutocompleteSuccess$: Observable<Action> = this.actions$.pipe(
     ofType(weatherAction.getWeatherAutocompleteSuccess),
     map((data) => weatherAction.setWeatherAutocomplete(data))
   );
+
   @Effect()
   setCurrentSelectedPlaceWeather$: Observable<Action> = this.actions$.pipe(
     ofType(weatherAction.getCurrentSelectedPlaceWeather),
-    switchMap((action) => {
-      return this.weatherApiService.getCurrentSelectedPlaceForecast(action.data).pipe(
-        catchError(
-          (err) => of(weatherAction.getCurrentSelectedPlaceWeatherFailure({error: err}))),
-      );
-    }),
+    switchMap((action) => this.weatherApiService.getCurrentSelectedPlaceForecast(action.data)),
     map((data: IGetCurrentConditionsResponse) => {
       return weatherAction.getCurrentSelectedPlaceWeatherSuccess({
-        data:
-          (new CurrentConditionsViewModel(data))
+        data: new CurrentConditionsViewModel(data)
       });
-    })
+    }),
+    catchError((err) => of(weatherAction.getCurrentSelectedPlaceWeatherFailure({error: err})))
   );
+
   @Effect()
   getCurrentSelectedPlaceWeatherSuccess$: Observable<Action> = this.actions$.pipe(
     ofType(weatherAction.getCurrentSelectedPlaceWeatherSuccess),
     map((data) => weatherAction.setCurrentSelectedPlaceWeather(data))
   );
+
   @Effect()
   getFiveDailyWeatherForecasts$: Observable<Action> = this.actions$.pipe(
     ofType(weatherAction.getFiveDailyWeatherForecasts),
-    switchMap((action) => {
-      return this.weatherApiService.get5DaysOfDailyForecasts(action.data).pipe(
-        catchError(
-          (err) => of(weatherAction.getFiveDailyWeatherForecastsFailure({error: err}))),
-      );
-    }),
+    switchMap((action) => this.weatherApiService.get5DaysOfDailyForecasts(action.data)),
     map((data: IGet5DaysOfForecastResponse) => {
-      return weatherAction.getFiveDailyWeatherForecastsSuccess({
-        data:
-          (new FiveDaysOfForecastViewModel(data).forecasts)
-      });
-    })
+      return weatherAction.getFiveDailyWeatherForecastsSuccess({data: new FiveDaysOfForecastViewModel(data).forecasts});
+    }),
+    catchError((err) => of(weatherAction.getFiveDailyWeatherForecastsFailure({error: err})))
   );
+
   @Effect()
   getFiveDailyWeatherForecastsSuccess$: Observable<Action> = this.actions$.pipe(
     ofType(weatherAction.getFiveDailyWeatherForecastsSuccess),
@@ -84,7 +74,6 @@ export class WeatherEffects {
   );
 
   constructor(private actions$: Actions,
-              private weatherApiService: WeatherService
-  ) {
-  }
+              private http: HttpClient,
+              private weatherApiService: WeatherService) {}
 }

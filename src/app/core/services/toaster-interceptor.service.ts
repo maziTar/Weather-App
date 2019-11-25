@@ -20,7 +20,7 @@ export class ToasterInterceptorService implements HttpInterceptor {
 
 
   private handleError(req: AppError) {
-    if (req.status >= 1000) { // internal server message - display as is
+    if (req.status >= 500) { // internal server message - display as is
       this.showSnackbar(req.value);
     }
     return throwError(req);
@@ -28,7 +28,7 @@ export class ToasterInterceptorService implements HttpInterceptor {
 
   private showSnackbar(massage: string): void {
     this.snackBar.open(massage, '', {
-      duration: 3000,
+      duration: 60000,
       verticalPosition: 'top',
       panelClass: 'error'
     });

@@ -27,9 +27,13 @@ export class ACCUWeatherAutocompleteResultsViewModel {
   }
 
   private generateResults(rawData: IACCUWeatherAutocompleteResponse[]) {
-    return rawData.reduce((prev = [], current) => {
-      return !prev.length ? [new ACCUWeatherAutocompleteViewModel(current)] : [...prev, new ACCUWeatherAutocompleteViewModel(current)];
-    }, []);
+    if (rawData) {
+      return rawData.reduce((prev = [], current) => {
+        return !prev.length ? [new ACCUWeatherAutocompleteViewModel(current)] : [...prev, new ACCUWeatherAutocompleteViewModel(current)];
+      }, []);
+    } else {
+      return [];
+    }
   }
 }
 
@@ -64,9 +68,13 @@ export class FiveDaysOfForecastViewModel {
   }
 
   private generateForecasts(rawData: IDailyForecast[]) {
+    if (rawData) {
     return rawData.reduce((prev = [], current) => {
       return !prev.length ? [new DailyForecastViewModel(current)] : [...prev, new DailyForecastViewModel(current)];
     }, []);
+    } else {
+      return [];
+    }
   }
 }
 

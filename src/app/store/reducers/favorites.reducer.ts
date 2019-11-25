@@ -9,15 +9,16 @@ export interface State {
   selectedFavorite: WeatherLocationFavorite;
 }
 
-export const favInitialState: State = {
+export const initialState: State = {
   favoritesArray: [],
   selectedFavorite: null
 };
 
 const favoritesReducer = createReducer(
-  favInitialState,
-  on(favActions.setSelectedFavorite,
-    (state, {data}) => ({...state, selectedFavorite: data})),
+  initialState,
+  on(favActions.removeFromFavorites,
+    (state, {data}) => ({...state, favoritesArray: [...state.favoritesArray.filter(fav => fav.key === data.key)]})
+  ),
   on(favActions.addToFavorites,
     (state, {data}) => ({...state, favoritesArray: [...state.favoritesArray, data]})
   ),
@@ -25,7 +26,7 @@ const favoritesReducer = createReducer(
     (state, {data}) => ({...state, selectedFavorite: data}))
 );
 
-export function reducer(state = favInitialState, action: Action) {
+export function reducer(state = initialState, action: Action) {
   return favoritesReducer(state, action);
 }
 
