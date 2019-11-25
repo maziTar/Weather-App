@@ -15,6 +15,7 @@
   </form>
   <mat-card *ngIf="currentWeatherData$ | async as currentWeatherData" fxLayout="column"
             fxLayoutGap="2rem">
+
     <div *ngIf="selectedAutoCompleteOption$ | async as autocompleteSelected" class="main-header"
          fxLayout="row wrap" fxLayoutAlign="space-between start">
       <div fxLayout="row wrap" fxLayout.lt-sm="row" fxLayoutAlign="start">
@@ -39,8 +40,9 @@
     <mat-card-title fxLayoutAlign="center center">
       {{currentWeatherData.weatherText}}
     </mat-card-title>
-    <mat-card-content fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="2rem">
-      <mat-card *ngFor="let day of selectedLocationFiveDailyDetails$ | async" fxLayout="column"
+
+    <mat-card-content *ngIf="(selectedLocationFiveDailyDetails$ | async).length" fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="2rem">
+      <mat-card *ngFor="let day of selectedLocationFiveDailyDetails$ | async" fxLayout="column" class="inner-forecast-cards"
                 fxLayoutAlign="center center" fxLayoutGap="0.5rem">
         <img [src]="iconsGeneratorFunc(day.DayIcon)" alt="weather icon" class="img-responsive" mat-card-avatar
              typeof="foaf:Image">
@@ -51,7 +53,6 @@
         </mat-card-header>
       </mat-card>
     </mat-card-content>
-
   </mat-card>
 </div>
 

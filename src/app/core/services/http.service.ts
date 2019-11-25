@@ -53,10 +53,8 @@ export class HttpService {
     let params: HttpParams = null;
     switch (method) {
       case 'GET':
-        headers = (new HttpHeaders(headers)).set('Accept-Encoding', 'gzip');
-        headers.set('Access-Control-Allow-Origin', '*');
-        headers.set('Accept-Encoding', 'gzip');
-        break;
+         // headers = (new HttpHeaders(headers)).set('Accept', '*');
+         break;
       case 'PUT':
         if (!this.headersOfType(headers, 'Content-Type')) { // Add only if there is no such Header
           headers = (new HttpHeaders(headers)).set('Content-Type', 'application/json');

@@ -29,7 +29,7 @@ export class WeatherApiService {
 
   public getAutocompleteResults(query: string): Observable<AppResponse<IACCUWeatherAutocompleteResponse[]>> {
     const url = `${this.apiBaseUrlNamespace}/${this.apiAutocompleteNamespace}`;
-    return this.http.get<IACCUWeatherAutocompleteResponse[]>(`${url}`, {
+    return this.http.get<IACCUWeatherAutocompleteResponse[]>(url, {
       params: {
         apikey: this.apiKeyNamespace,
         q: query ? query : 'tel',
@@ -39,8 +39,9 @@ export class WeatherApiService {
   }
 
   public getCurrentConditions(locationKey: string): Observable<AppResponse<IGetCurrentConditionsResponse>> {
+    const url = `${this.apiBaseUrlNamespace}/${this.apiConditionsNamespace}/${locationKey}`;
     return this.http.get<IGetCurrentConditionsResponse>
-    (`${this.apiBaseUrlNamespace}/${this.apiConditionsNamespace}/${locationKey}`, {
+    (url, {
       params: {
         language: 'en-us',
         apikey: this.apiKeyNamespace,
@@ -50,8 +51,9 @@ export class WeatherApiService {
   }
 
   public get5DaysOfDailyForecasts(locationKey: string): Observable<AppResponse<IGet5DaysOfForecastResponse>> {
+    const url = `${this.apiBaseUrlNamespace}/${this.apiForecastNamespace}/${locationKey}`;
     return this.http.get<IGet5DaysOfForecastResponse>
-    (`${this.apiForecastNamespace}/${this.get5DaysOfDailyForecasts}/${locationKey}`, {
+    (url, {
       params: {
         language: 'en-us',
         apikey: this.apiKeyNamespace,

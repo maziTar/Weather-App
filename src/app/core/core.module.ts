@@ -14,6 +14,7 @@ const devProviders = [
 ];
 
 const prodProviders = [
+  {provide: HTTP_INTERCEPTORS, useClass: MockBackendInterceptor, multi: true},
   {provide: HTTP_INTERCEPTORS, useClass: ToasterInterceptorService, multi: true},
   {provide: HTTP_INTERCEPTORS, useClass: ApiErrorNormalizationInterceptor, multi: true}
 
