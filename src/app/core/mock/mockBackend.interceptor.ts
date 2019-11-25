@@ -12,6 +12,7 @@ import {
   ACCUWEATHER_API_AUTOCOMPLETE_URL,
   ACCUWEATHER_API_CONDITIONS_URL
 } from '../../shared/consts/weather.consts';
+import {EResultCodes} from '../models/api.models';
 
 @Injectable()
 export class MockBackendInterceptor implements HttpInterceptor {
@@ -43,7 +44,7 @@ export class MockBackendInterceptor implements HttpInterceptor {
     const url = `/assets/mock/${mockFileName}.json`;
     return ajax.getJSON(url)
       .pipe(
-        map(body => new HttpResponse({status: 200, body: AppHttpResponse(body)}))
+        map(body => new HttpResponse({status: EResultCodes.Success, body: AppHttpResponse(body)}))
       );
   }
 

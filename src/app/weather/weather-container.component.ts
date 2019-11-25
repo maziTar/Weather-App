@@ -127,7 +127,7 @@ export class WeatherContainerComponent implements OnInit {
       startWith(''),
       // TODO - move to the store
       tap((searchStr) => this.searchString = searchStr),
-      debounceTime(100),
+      debounceTime(500),
       tap(searchText => {
         this.store.dispatch(weatherActions.getWeatherAutocomplete({data: searchText}));
       }),
