@@ -40,7 +40,7 @@ export class MockBackendInterceptor implements HttpInterceptor {
   }
 
   getApiCall(request: HttpRequest<any>, next: HttpHandler, mockFileName: string): Observable<HttpEvent<any>> {
-    const url = `${environment.BASE_CLIENT_URL}/assets/mock/${mockFileName}.json`;
+    const url = `/assets/mock/${mockFileName}.json`;
     return ajax.getJSON(url)
       .pipe(
         map(body => new HttpResponse({status: 200, body: AppHttpResponse(body)}))
