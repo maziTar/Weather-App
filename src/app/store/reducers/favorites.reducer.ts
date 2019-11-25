@@ -17,7 +17,7 @@ export const initialState: State = {
 const favoritesReducer = createReducer(
   initialState,
   on(favActions.removeFromFavorites,
-    (state, {data}) => ({...state, favoritesArray: [...state.favoritesArray.filter(fav => fav.key === data.key)]})
+    (state, {data}) => ({...state, favoritesArray: [...state.favoritesArray.filter(fav => fav.key !== data.key)]})
   ),
   on(favActions.addToFavorites,
     (state, {data}) => ({...state, favoritesArray: [...state.favoritesArray, data]})
