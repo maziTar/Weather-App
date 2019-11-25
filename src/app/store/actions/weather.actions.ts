@@ -69,7 +69,6 @@ export const setAutocompleteSelectedValue = createAction(
   '[Weather] set Autocomplete Selected Value',
   props<{ data: ACCUWeatherAutocompleteViewModel }>()
 );
-// export isCurrentCityExistInFavoriteList
 
 export const setCurrentCityExistInFavoriteList = createAction(
   '[Weather] set Current City Exist In Favorites List',

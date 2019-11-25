@@ -1,7 +1,6 @@
 import {Action, createReducer, on} from '@ngrx/store';
-import * as favAction from '../actions/favorites.actions';
+import * as favActions from '../actions/favorites.actions';
 import {WeatherLocationFavorite} from '../../shared/models/favorities.models';
-
 
 export const favoritesFeatureKey = 'favorites';
 
@@ -10,28 +9,23 @@ export interface State {
   selectedFavorite: WeatherLocationFavorite;
 }
 
-export const initialState: State = {
+export const favInitialState: State = {
   favoritesArray: [],
   selectedFavorite: null
 };
 
 const favoritesReducer = createReducer(
-  initialState,
-  on(favAction.addToFavorites,
-    (state, {data}) => (
-      {...state, favoritesArray: [...state.favoritesArray, data]})
+  favInitialState,
+  on(favActions.setSelectedFavorite,
+    (state, {data}) => ({...state, selectedFavorite: data})),
+  on(favActions.addToFavorites,
+    (state, {data}) => ({...state, favoritesArray: [...state.favoritesArray, data]})
   ),
-  on(favAction.removeFromFavorites,
-    (state, {data}) => (
-      {...state, favoritesArray: [...state.favoritesArray.filter(fav => fav.key === data.key)]})
-  ),
-  on(favAction.setSelectedFavorite,
-    (state, {data}) => (
-      {...state, selectedFavorite: data})
-  ),
+  on(favActions.setSelectedFavorite,
+    (state, {data}) => ({...state, selectedFavorite: data}))
 );
 
-export function reducer(state = initialState, action: Action) {
+export function reducer(state = favInitialState, action: Action) {
   return favoritesReducer(state, action);
 }
 

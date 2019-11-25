@@ -28,15 +28,17 @@ import {iconsGeneratorFunc} from '../shared/services/util.service';
 export class WeatherContainerComponent implements OnInit {
 
   public weatherSearchControl = new FormControl();
+  public iconsGeneratorFunc = iconsGeneratorFunc;
   public filteredOptions$: Observable<ACCUWeatherAutocompleteViewModel[]>;
   public selectedLocationFiveDailyDetails$: Observable<IDailyForecastViewModel[]>;
   public currentWeatherData$: Observable<CurrentConditionsViewModel>;
-  public iconsGeneratorFunc = iconsGeneratorFunc;
+  public selectedAutoCompleteOption$: Observable<ACCUWeatherAutocompleteViewModel>;
+
+  public isCurrentCityExistInFavoriteList$: Observable<boolean>;
   private favorites$: Observable<WeatherLocationFavorite[]>;
   private allAutocompleteOptions$: Observable<ACCUWeatherAutocompleteViewModel[]>;
-  private selectedAutoCompleteOption$: Observable<ACCUWeatherAutocompleteViewModel>;
   private searchString = '';
-  private isCurrentCityExistInFavoriteList$: Observable<boolean>;
+
 
   constructor(private store: Store<fromRoot.State>) {
   }

@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
-import {HttpClient} from '@angular/common/http';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
@@ -85,7 +84,6 @@ export class WeatherEffects {
   );
 
   constructor(private actions$: Actions,
-              private http: HttpClient,
               private weatherApiService: WeatherService
   ) {
   }
