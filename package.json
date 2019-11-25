@@ -8,10 +8,12 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "heroku-postbuild --aot --target=production"
+    "heroku-postbuild": "ng build echo This runs afterwards.",
+    "heroku-prebuild": "echo This runs before Heroku installs your dependencies.",
   },
   "engines": {
-    "node": "10.16.3"
+    "node": "10.16.3",
+    "npm": "6.11.3"
   },
   "dependencies": {
     "@angular/animations": "~8.2.14",
