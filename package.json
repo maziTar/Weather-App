@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "heroku-postbuild": "ng build echo This runs afterwards.",
-    "heroku-prebuild": "echo This runs before Heroku installs your dependencies.",
+    "heroku-prebuild": "echo This runs before Heroku installs your dependencies."
   },
   "engines": {
     "node": "10.16.3",
