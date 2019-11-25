@@ -9,9 +9,10 @@ export interface State {
 }
 
 export const reducers: ActionReducerMap<State> = {
-  [fromFavorites.favoritesFeatureKey]: fromFavorites.reducer,
-  [fromWeather.weatherFeatureKey]: fromWeather.reducer,
+  favorites: fromFavorites.reducer,
+  weather: fromWeather.reducer,
 };
+
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
 
 export const selectWeatherState = createFeatureSelector<fromWeather.State>(fromWeather.weatherFeatureKey);
