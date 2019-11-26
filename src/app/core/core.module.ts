@@ -7,7 +7,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MockBackendInterceptor} from './mock/mockBackend.interceptor';
 
 const devProviders = [
-  {provide: HTTP_INTERCEPTORS, useClass: MockBackendInterceptor, multi: true},
+//  {provide: HTTP_INTERCEPTORS, useClass: MockBackendInterceptor, multi: true},
   {provide: HTTP_INTERCEPTORS, useClass: ToasterInterceptorService, multi: true},
 ];
 

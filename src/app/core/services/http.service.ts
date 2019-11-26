@@ -22,7 +22,6 @@ export class HttpService {
   }
 
   private addRequestOptions(options) {
-    const headers = options && options.headers ? (options.headers) : null;
     const observe: 'response' = 'response';
     let params: HttpParams = null;
     if (options && options.params) {
@@ -31,7 +30,6 @@ export class HttpService {
     }
     return {
       ...options,
-      headers,
       params,
       observe, // get full response instead of just the body with the observe option
     };
