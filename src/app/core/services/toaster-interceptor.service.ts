@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {AppError} from '../models/error.model';
@@ -18,12 +18,11 @@ export class ToasterInterceptorService implements HttpInterceptor {
       catchError(e => this.handleError(e)));
   }
 
-
-  private handleError(req: AppError) {
-    if (req.status >= 500) { // internal server message - display as is
-      this.showSnackbar(req.value);
+  private handleError(httpRes: HttpErrorResponse) {
+    if (httpRes.status !== 200) {
+      this.showSnackbar(`${httpRes.statusText} something went wrong, try again later`);
     }
-    return throwError(req);
+    return throwError(httpRes);
   }
 
   private showSnackbar(massage: string): void {

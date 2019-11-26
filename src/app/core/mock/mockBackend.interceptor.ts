@@ -33,7 +33,6 @@ export class MockBackendInterceptor implements HttpInterceptor {
           } else if (request.url.includes(this.apiForecastNamespace) && request.method === 'GET') {
             return this.getApiCall(request, next, 'GetAccuweather5DaysOfForecast');
           }
-
           // pass through any requests not handled above
           return next.handle(request);
         })

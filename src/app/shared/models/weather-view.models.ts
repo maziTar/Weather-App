@@ -79,22 +79,22 @@ export class FiveDaysOfForecastViewModel {
 }
 
 export interface IDailyForecastViewModel {
-  Date: string;
-  Temperature: IDailyForecastTemperature;
-  DayIcon: number;
-  NightIcon: number;
+  date: string;
+  temperature: IDailyForecastTemperature;
+  dayIcon: number;
+  nightIcon: number;
 }
 
 export class DailyForecastViewModel {
-  Date: string;
-  Temperature: IDailyForecastTemperature;
-  DayIcon: number;
-  NightIcon: number;
+  date: string;
+  temperature: IDailyForecastTemperature;
+  dayIcon: number;
+  nightIcon: number;
 
   constructor(data: IDailyForecast) {
-    this.Date = data.Date;
-    this.Temperature = data.Temperature;
-    this.DayIcon = data.Day.Icon;
-    this.NightIcon = data.Night.Icon;
+    this.date = data.Date;
+    this.temperature = data.Temperature;
+    this.dayIcon = data.Day.Icon;
+    this.nightIcon = data.Night.Icon;
   }
 }

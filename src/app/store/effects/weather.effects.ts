@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {HttpClient} from '@angular/common/http';
-import {catchError, map, switchMap} from 'rxjs/operators';
+import {catchError, filter, map, switchMap, tap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as weatherAction from '../actions/weather.actions';
@@ -9,7 +9,7 @@ import {WeatherService} from '../../shared/services/weather.service';
 import {
   ACCUWeatherAutocompleteResultsViewModel,
   CurrentConditionsViewModel,
-  FiveDaysOfForecastViewModel
+  FiveDaysOfForecastViewModel, IDailyForecastViewModel
 } from '../../shared/models/weather-view.models';
 import {
   IACCUWeatherAutocompleteResponse,
@@ -23,6 +23,7 @@ export class WeatherEffects {
   @Effect()
   getWeatherAutocomplete$: Observable<Action> = this.actions$.pipe(
     ofType(weatherAction.getWeatherAutocomplete),
+    filter(action => typeof action.data === 'string' && !!action.data),
     switchMap((action) => this.weatherApiService.getAutocompleteResults(action.data)),
     map((data: IACCUWeatherAutocompleteResponse[]) => {
       return weatherAction.getWeatherAutocompleteSuccess({
@@ -61,8 +62,8 @@ export class WeatherEffects {
   getFiveDailyWeatherForecasts$: Observable<Action> = this.actions$.pipe(
     ofType(weatherAction.getFiveDailyWeatherForecasts),
     switchMap((action) => this.weatherApiService.get5DaysOfDailyForecasts(action.data)),
-    map((data: IGet5DaysOfForecastResponse) => {
-      return weatherAction.getFiveDailyWeatherForecastsSuccess({data: new FiveDaysOfForecastViewModel(data).forecasts});
+    map((data: IDailyForecastViewModel[]) => {
+      return weatherAction.getFiveDailyWeatherForecastsSuccess({ data });
     }),
     catchError((err) => of(weatherAction.getFiveDailyWeatherForecastsFailure({error: err})))
   );
